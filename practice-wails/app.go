@@ -1,24 +1,32 @@
 package main
 
 import (
+	"backend"
 	"context"
 	"fmt"
 )
 
 // App struct
 type App struct {
-	ctx context.Context
+	ctx      context.Context
+	mainLoop *backend.MainLoop
 }
 
 // NewApp creates a new App application struct
 func NewApp() *App {
-	return &App{}
+	// 既にMainLoopのインスタンスが存在する場合はnilを返す。
+	mainLoop := backend.NewMainLoop()
+	if mainLoop != nil {
+		return nil
+	}
+	return &App{mainLoop: mainLoop}
 }
 
 // startup is called at application startup
 func (a *App) startup(ctx context.Context) {
 	// Perform your setup here
 	a.ctx = ctx
+
 }
 
 // domReady is called after front-end resources have been loaded
